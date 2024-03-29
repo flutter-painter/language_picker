@@ -140,10 +140,7 @@ class SingleChoiceDialogState extends State<LanguagePickerDialog> {
                     ))
                 .toList(),
           )
-        : widget.searchEmptyView ??
-            Center(
-              child: Text('No language found.'),
-            );
+        : widget.searchEmptyView ?? const SizedBox();
   }
 
   _buildHeader() {
