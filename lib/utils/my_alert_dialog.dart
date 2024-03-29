@@ -146,16 +146,17 @@ class MyAlertDialog<T> extends StatelessWidget {
       );
     }
 
-    Widget dialogChild = new Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: children,
+    Widget dialogChild = SizedBox(
+      height: MediaQuery.of(context).size.height * 0.8,
+      child: new Column(
+        children: children,
+      ),
     );
 
     if (label != null)
       dialogChild =
           new Semantics(namesRoute: true, label: label, child: dialogChild);
 
-    return new Dialog(child: dialogChild);
+    return Dialog(child: dialogChild);
   }
 }

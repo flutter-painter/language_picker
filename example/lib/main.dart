@@ -67,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: Text('Select your language'),
                 onValuePicked: (Language language) => setState(() {
                       _selectedDialogLanguage = language;
-                      print(_selectedDialogLanguage.name);
-                      print(_selectedDialogLanguage.isoCode);
+                      // print(_selectedDialogLanguage.name);
+                      // print(_selectedDialogLanguage.isoCode);
                     }),
                 itemBuilder: _buildDialogItem)),
       );
@@ -81,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
           pickerSheetHeight: 200.0,
           onValuePicked: (Language language) => setState(() {
             _selectedCupertinoLanguage = language;
-            print(_selectedCupertinoLanguage.name);
-            print(_selectedCupertinoLanguage.isoCode);
+            // print(_selectedCupertinoLanguage.name);
+            // print(_selectedCupertinoLanguage.isoCode);
           }),
         );
       });
@@ -112,8 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemBuilder: _buildDropdownItem,
                     onValuePicked: (Language language) {
                       _selectedDropdownLanguage = language;
-                      print(_selectedDropdownLanguage.name);
-                      print(_selectedDropdownLanguage.isoCode);
+                      // print(_selectedDropdownLanguage.name);
+                      // print(_selectedDropdownLanguage.isoCode);
                     },
                   ),
                 ),
