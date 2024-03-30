@@ -1,4 +1,5 @@
 import 'package:language_picker/languages.dart';
+import 'package:language_picker/utils/no_accents.dart';
 import 'package:language_picker/utils/typedefs.dart';
 
 import 'package:language_picker/utils/my_alert_dialog.dart';
@@ -132,7 +133,7 @@ class SingleChoiceDialogState extends State<LanguagePickerDialog> {
                 .map((item) => SimpleDialogOption(
                       child: widget.itemBuilder != null
                           ? widget.itemBuilder!(item)
-                          : Text(item.name),
+                          : Text(item.nameEn),
                       onPressed: () {
                         widget.onValuePicked!(item);
                         Navigator.pop(context);
@@ -171,11 +172,11 @@ class SingleChoiceDialogState extends State<LanguagePickerDialog> {
       onChanged: (String value) {
         setState(() {
           _filteredLanguages = _allLanguages
-              .where((Language language) =>
-                  language.name.toLowerCase().startsWith(value.toLowerCase()) ||
-                  language.isoCode
-                      .toLowerCase()
-                      .startsWith(value.toLowerCase()))
+              .where(
+                (Language language) =>
+                    language.nameEn.clean.startsWith(value.clean) ||
+                    language.name.clean.startsWith(value.clean),
+              )
               .toList();
         });
       },

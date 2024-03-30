@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/cupertino.dart';
-
 import 'package:language_picker/languages.dart';
 import 'package:language_picker/language_picker.dart';
 
@@ -13,7 +11,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'language_picker Example',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.blue,
+        buttonTheme: const ButtonThemeData(
+          buttonColor: Color(0xFF0097A7),
+          textTheme: ButtonTextTheme.normal,
+        ),
+        indicatorColor: Color(0xfffffe9d),
       ),
       home: MyHomePage(title: 'language_picker Example'),
     );
@@ -30,69 +34,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Language _selectedDropdownLanguage = Languages.korean;
-  Language _selectedDialogLanguage = Languages.korean;
-  Language _selectedCupertinoLanguage = Languages.korean;
+  // Language _selectedDialogLanguage = Languages.korean;
 
   // It's sample code of Dropdown Item.
-  Widget _buildDropdownItem(Language language) {
-    return Row(
-      children: <Widget>[
-        SizedBox(
-          width: 8.0,
-        ),
-        Text("${language.name} (${language.isoCode})"),
-      ],
-    );
-  }
 
   // It's sample code of Dialog Item.
-  Widget _buildDialogItem(Language language) => Row(
-        children: <Widget>[
-          Text(language.name),
-          SizedBox(width: 8.0),
-          Flexible(child: Text("(${language.isoCode})"))
-        ],
+  Widget _buildDialogItem(Language language) => ListTile(
+        leading: CircleAvatar(
+          child: Text(language.name.isEmpty
+              ? language.nameEn.substring(0, 1).toUpperCase()
+              : language.name.substring(0, 1).toUpperCase()),
+        ),
+        title: Text(language.name),
+        subtitle: Text(language.nameEn),
       );
 
   void _openLanguagePickerDialog() => showDialog(
         context: context,
         builder: (context) => Theme(
-            data: Theme.of(context).copyWith(primaryColor: Colors.pink),
+            data: Theme.of(context),
             child: LanguagePickerDialog(
-                titlePadding: EdgeInsets.all(8.0),
-                searchCursorColor: Colors.pinkAccent,
-                searchInputDecoration: InputDecoration(hintText: 'Search...'),
+                // searchCursorColor: Colors.pinkAccent,
+                searchInputDecoration:
+                    InputDecoration(icon: const Icon(Icons.search)),
                 isSearchable: true,
-                title: Text('Select your language'),
+                title: const Icon(Icons.translate,
+                    size: 44), // Text('Select your language'),
                 onValuePicked: (Language language) => setState(() {
-                      _selectedDialogLanguage = language;
-                      // print(_selectedDialogLanguage.name);
-                      // print(_selectedDialogLanguage.isoCode);
+                      // _selectedDialogLanguage = language;
                     }),
                 itemBuilder: _buildDialogItem)),
-      );
-
-  // It's sample code of Cupertino Item.
-  void _openCupertinoLanguagePicker() => showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return LanguagePickerCupertino(
-          pickerSheetHeight: 200.0,
-          onValuePicked: (Language language) => setState(() {
-            _selectedCupertinoLanguage = language;
-            // print(_selectedCupertinoLanguage.name);
-            // print(_selectedCupertinoLanguage.isoCode);
-          }),
-        );
-      });
-
-  Widget _buildCupertinoItem(Language language) => Row(
-        children: <Widget>[
-          Text("+${language.name}"),
-          SizedBox(width: 8.0),
-          Flexible(child: Text(language.name))
-        ],
       );
 
   @override
@@ -105,34 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Expanded(
-                child: Center(
-                  child: LanguagePickerDropdown(
-                    initialValue: Languages.korean,
-                    itemBuilder: _buildDropdownItem,
-                    onValuePicked: (Language language) {
-                      _selectedDropdownLanguage = language;
-                      // print(_selectedDropdownLanguage.name);
-                      // print(_selectedDropdownLanguage.isoCode);
-                    },
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: MaterialButton(
-                    child: Text("Push"),
-                    onPressed: _openLanguagePickerDialog,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: ListTile(
-                    title: _buildCupertinoItem(_selectedCupertinoLanguage),
-                    onTap: _openCupertinoLanguagePicker,
-                  ),
-                ),
+              IconButton(
+                icon: const Icon(Icons.translate, size: 44),
+                onPressed: _openLanguagePickerDialog,
               ),
             ]),
       ), // This trailing comma makes auto-formatting nicer for build methods.

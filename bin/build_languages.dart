@@ -20,13 +20,13 @@ main() {
       .map<Language>((m) => Language.fromMap(Map<String, String>.from(m)))
       .toList();
   final getters = languages.map((l) {
-    final getterName = toGetterName(l.name);
-    return "  static Language get $getterName => Language('${l.isoCode}', '${l.name}');";
+    final getterName = toGetterName(l.nameEn);
+    return "  static Language get $getterName => Language('${l.code}', '${l.nameEn}', '${l.name}');";
   });
 
   final defaultLanguages = '''
 static List<Language> defaultLanguages =
-  [${languages.map((l) => 'Languages.' + toGetterName(l.name)).join(',\n')}];
+  [${languages.map((l) => 'Languages.' + toGetterName(l.nameEn)).join(',\n')}];
 ''';
 
   final staticClass = '''

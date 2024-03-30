@@ -1,23 +1,26 @@
 import 'languages.g.dart';
 export 'languages.g.dart';
 
-class Language {
-  Language(this.isoCode, this.name);
+// TO consider, using flags here to help
 
+class Language {
+  Language(this.code, this.nameEn, this.name);
+
+  final String code;
+  final String nameEn;
   final String name;
-  final String isoCode;
 
   Language.fromMap(Map<String, String> map)
-      : name = map['name']!,
-        isoCode = map['isoCode']!;
+      : nameEn = map['nameEn']!,
+        code = map['code']!,
+        name = map['name']!;
 
   /// Returns the Language matching the given ISO code from the standard list.
-  factory Language.fromIsoCode(String isoCode) =>
-      Languages.defaultLanguages.firstWhere((l) => l.isoCode == isoCode);
+  factory Language.fromIsoCode(String code) =>
+      Languages.defaultLanguages.firstWhere((l) => l.code == code);
 
-  bool operator ==(o) =>
-      o is Language && name == o.name && isoCode == o.isoCode;
+  bool operator ==(o) => o is Language && nameEn == o.nameEn && code == o.code;
 
   @override
-  int get hashCode => isoCode.hashCode;
+  int get hashCode => code.hashCode;
 }
